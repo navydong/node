@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/react/16.10.2/umd/react.production.min.js"></script>
+  <script src="https://cdn.bootcss.com/react-dom/16.10.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    const e = React.createElement;
+    const container = document.getElementById('app')
+
+    class App extends React.Component {
+      state = {
+        data: []
+      }
+      componentDidMount() {
+        fetch('http://localhost:3000/api/xiaomi/query').then(response => response.json()).then(res => {
+          this.setState({
+            data: res.data
+          })
+        })
+      }
+      render() {
+        const data = this.state.data
+        return <div>
+          {data.map(item => {
+            return <div><span>{item.title}</span><img src={item.image} /></div>
+          })}
+        </div>
+      }
+    }
+
+    ReactDOM.render(
+      e(App),
+      container
+    )
+  </script>
+</body>
+
+</html>
