@@ -1,21 +1,25 @@
 const express = require("express")
+const path = require('path')
 const sqlService = require('./store')
+const sotryRouter = require('./route')
 
 const app = express()
-//设置允许跨域访问该服务.
-app.all('*', function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  //Access-Control-Allow-Headers ,可根据浏览器的F12查看,把对应的粘贴在这里就行
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  res.header('Access-Control-Allow-Methods', '*');
-  res.header('Content-Type', 'application/json;charset=utf-8');
-  next();
-});
-app.use(express.static('pages'))
+app.use(express.static('public'));  
+// //设置允许跨域访问该服务.
+// app.all('*', function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   //Access-Control-Allow-Headers ,可根据浏览器的F12查看,把对应的粘贴在这里就行
+//   res.header('Access-Control-Allow-Headers', 'Content-Type');
+//   res.header('Access-Control-Allow-Methods', '*');
+//   res.header('Content-Type', 'application/json;charset=utf-8');
+//   next();
+// });
+
 
 app.get('/', function(req, res){
   res.send('Hello Donghaijun')
 })
+app.use('/story', sotryRouter)
 app.get('/api/xiaomi/query', function(req, res){
   const sql = 'SELECT * FROM xiaomi WHERE del = 0'
   sqlService.query(sql).then(row=>{
@@ -60,9 +64,7 @@ app.get('/api/xiaomi/delete/:id?', function(req, res){
   })
 })
 
-app.get('/story', function(){
 
-})
 
 
 const server = app.listen(3000, function(){

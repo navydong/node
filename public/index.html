@@ -19,7 +19,8 @@
 
     class App extends React.Component {
       state = {
-        data: []
+        data: [],
+        menus: []
       }
       componentDidMount() {
         fetch('http://localhost:3000/api/xiaomi/query').then(response => response.json()).then(res => {
@@ -27,10 +28,23 @@
             data: res.data
           })
         })
+        fetch('http://localhost:3000/story/sjy').then(response => response.json()).then(res=>{
+          this.setState({
+            menus: res.data
+          })
+        })
+      }
+      onDetail = (href)=>{
+      
       }
       render() {
-        const data = this.state.data
+        const { data, menus } = this.state
         return <div>
+          {
+            menus.map(item=>{
+              return <div onClick={() => this.onDetail(item.href)}>{item.title}</div>
+            })
+          }
           {data.map(item => {
             return <div><span>{item.title}</span><img src={item.image} /></div>
           })}
