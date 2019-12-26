@@ -1,6 +1,12 @@
-启动
+启动node
 ```bash
 npm run start
+```
+
+启动页面
+```bash
+cd pages
+umi dev
 ```
 
 > Express 4.17.1构建

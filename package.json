@@ -4,11 +4,13 @@
   "description": "启动 ```bash npm run start ```",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "dev:app": "cd pages && umi dev"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "antd-mobile": "^2.3.1",
     "cheerio": "^1.0.0-rc.3",
     "express": "^4.17.1",
     "mysql": "^2.17.1",

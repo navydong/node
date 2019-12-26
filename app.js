@@ -4,16 +4,17 @@ const sqlService = require('./store')
 const sotryRouter = require('./route')
 
 const app = express()
-app.use(express.static('public'));  
-// //设置允许跨域访问该服务.
-// app.all('*', function (req, res, next) {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   //Access-Control-Allow-Headers ,可根据浏览器的F12查看,把对应的粘贴在这里就行
-//   res.header('Access-Control-Allow-Headers', 'Content-Type');
-//   res.header('Access-Control-Allow-Methods', '*');
-//   res.header('Content-Type', 'application/json;charset=utf-8');
-//   next();
-// });
+app.use(express.static('public'));
+app.use(express.static('pages'));
+//设置允许跨域访问该服务.
+app.all('*', function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  //Access-Control-Allow-Headers ,可根据浏览器的F12查看,把对应的粘贴在这里就行
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Methods', '*');
+  res.header('Content-Type', 'application/json;charset=utf-8');
+  next();
+});
 
 
 app.get('/', function(req, res){
