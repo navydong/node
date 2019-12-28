@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3000'
+const baseUrl = process.env.NODE_ENV  === 'production'? '': 'http://localhost:3000'
 export default function request(url, config) {
   url = baseUrl + url
   const requestConfig = Object.assign({
