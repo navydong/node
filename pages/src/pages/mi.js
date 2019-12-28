@@ -48,7 +48,7 @@ export default class App extends React.Component {
     );
     const { dataSource, data } = this.state
     const row = function (rowData, sectionID, rowID, highlightRow) {
-      return <div key={rowID} style={{ padding: '0 15px' }} onClick={()=> window.open(rowData.link)}>
+      return <div key={rowID} style={{ padding: '0 15px' }} onClick={()=> location.href = rowData.link}>
         <div
           style={{
             lineHeight: '50px',

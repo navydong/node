@@ -1,0 +1,14 @@
+.normal {
+  background: #f7f7f7;
+}
+
+.title {
+  text-align: centers;
+}
+
+.content {
+  font-size: 18px;
+  line-height: 35px;
+  padding: 10px;
+  color: #333;
+}

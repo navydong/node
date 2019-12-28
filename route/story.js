@@ -5,7 +5,7 @@ const cheerio = require('cheerio');
 let getHotNews = (res) => {
   let hotNews = [];
   // 访问成功，请求http://news.baidu.com/页面所返回的数据会包含在res.text中。
-  
+
   /* 使用cheerio模块的cherrio.load()方法，将HTMLdocument作为参数传入函数
      以后就可以使用类似jQuery的$(selectior)的方式来获取页面元素
    */
@@ -23,6 +23,24 @@ let getHotNews = (res) => {
   });
   return hotNews
 };
+const getStoryMenus = function (res) {
+  const $ = cheerio.load(res.text);
+  const menus = []
+  $('#chapterlist p a').each((index, item) => {
+    let menu = {
+      title: $(item).text(),        // 获取新闻标题
+      href: $(item).attr('href')    // 获取新闻网页链接
+    };
+    menus.push(menu)
+  })
+  return menus
+}
+
+const getChapter = function (res) {
+  const $ = cheerio.load(res.text);
+  return $('#chaptercontent').html()
+}
+
 router.get('/baiduNews', function (req, res) {
   /**
  * index.js
@@ -41,23 +59,12 @@ router.get('/baiduNews', function (req, res) {
   });
 
 })
-const getStoryMenus = function(res){
-  const $ = cheerio.load(res.text);
-  const menus = []
-  $('#chapterlist p a').each((index, item)=>{
-    let menu = {
-      title: $(item).text(),        // 获取新闻标题
-      href: $(item).attr('href').replace('.html', '')    // 获取新闻网页链接
-    };
-    menus.push(menu)     
-  })
-  return menus
-}
-router.get('/sjy', function(req, res){
-  superagent.get('http://m.mcmssc.com/91_91709/all.html').end((err, resp)=>{
-    if(err){
+
+router.get('/sjy', function (req, res) {
+  superagent.get('http://m.mcmssc.com/91_91709/all.html').end((err, resp) => {
+    if (err) {
       res.send('抓出失败')
-    }else{
+    } else {
       const menus = getStoryMenus(resp)
       res.send({
         code: 200,
@@ -67,8 +74,20 @@ router.get('/sjy', function(req, res){
     }
   })
 })
-router.get('/sjy/:id/', function(req, res){
-  res.send('123')
+router.get('/chapter', function (req, res) {
+  const chapterHref = req.query.href
+  superagent.get(`http://m.mcmssc.com${chapterHref}`).end((err, resp) => {
+    if (err) {
+      res.send({ data: '抓取失败' })
+    } else {
+      const chapter = getChapter(resp)
+      res.send({
+        code: 200,
+        message: 'success',
+        data: chapter
+      })
+    }
+  })
 })
 
 

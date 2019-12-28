@@ -12,6 +12,11 @@ const routes = [
     component: require('../../layouts/index.js').default,
     routes: [
       {
+        path: '/chapter',
+        exact: true,
+        component: require('../chapter.js').default,
+      },
+      {
         path: '/mi',
         exact: true,
         component: require('../mi.js').default,

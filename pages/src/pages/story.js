@@ -1,5 +1,7 @@
 import request from '../utils/request'
+import router from 'umi/router';
 import styles from './story.css';
+
 
 export default class App extends React.Component {
   state = {
@@ -14,16 +16,24 @@ export default class App extends React.Component {
     })
   }
   onDetail = (href) => {
-    window.open('http://m.mcmssc.com' + href + '.html')
+    router.push({
+      pathname: '/chapter',
+      query: {
+        href
+      }
+    });
   }
   render() {
     const { menus } = this.state
-    return <div>
+    return <div className='stor'>
       {
         menus.map(item => {
-          return <div onClick={() => this.onDetail(item.href)} key={item.href}>{item.title}</div>
+          return <div className={styles.item} onClick={() => this.onDetail(item.href)} key={item.href}>
+            <div>{item.title}</div>
+          </div>
         })
       }
+      <div id='bottom'></div>
     </div>
   }
 }
