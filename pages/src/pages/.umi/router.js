@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  Router as DefaultRouter,
-  Route,
-  Switch,
-  StaticRouter,
-} from 'react-router-dom';
+import { Router as DefaultRouter, Route, Switch } from 'react-router-dom';
 import dynamic from 'umi/dynamic';
 import renderRoutes from 'umi/lib/renderRoutes';
-import history from '@@/history';
+import history from '@tmp/history';
 
 const Router = DefaultRouter;
 
@@ -29,7 +24,7 @@ const routes = [
       {
         component: () =>
           React.createElement(
-            require('C:/Users/Navy/AppData/Roaming/npm/node_modules/umi/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
+            require('/usr/local/lib/node_modules/umi/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
               .default,
             { pagesPath: 'src/pages', hasRoutesInConfig: false },
           ),
@@ -39,7 +34,7 @@ const routes = [
   {
     component: () =>
       React.createElement(
-        require('C:/Users/Navy/AppData/Roaming/npm/node_modules/umi/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
+        require('/usr/local/lib/node_modules/umi/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
           .default,
         { pagesPath: 'src/pages', hasRoutesInConfig: false },
       ),
@@ -68,15 +63,7 @@ export default class RouterWrapper extends React.Component {
       });
     }
     this.unListen = history.listen(routeChangeHandler);
-    // dva 中 history.listen 会初始执行一次
-    // 这里排除掉 dva 的场景，可以避免 onRouteChange 在启用 dva 后的初始加载时被多执行一次
-    const isDva =
-      history.listen
-        .toString()
-        .indexOf('callback(history.location, history.action)') > -1;
-    if (!isDva) {
-      routeChangeHandler(history.location);
-    }
+    routeChangeHandler(history.location);
   }
 
   componentWillUnmount() {

@@ -1,4 +1,4 @@
-
+import request from '../utils/request'
 import styles from './story.css';
 
 export default class App extends React.Component {
@@ -7,7 +7,7 @@ export default class App extends React.Component {
     menus: []
   }
   componentDidMount() {
-    fetch('http://localhost:3000/story/sjy').then(response => response.json()).then(res => {
+    request('/story/sjy').then(res => {
       this.setState({
         menus: res.data
       })

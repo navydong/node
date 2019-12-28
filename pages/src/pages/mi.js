@@ -1,9 +1,6 @@
-
-import React from 'react'
 import { ListView } from 'antd-mobile';
+import request from '../utils/request'
 import styles from './mi.css';
-
-const host = 'http://192.168.124.16:3000'
 
 function MyBody(props) {
   return (
@@ -27,12 +24,12 @@ export default class App extends React.Component {
     }
   }
   componentDidMount() {
-    fetch(host + '/api/xiaomi/query').then(response => response.json()).then(res => {
+    request('/api/xiaomi/query').then(res => {
       this.setState({
         data: res.data,
         dataSource: this.state.dataSource.cloneWithRows(res.data),
       })
-    })
+    }).catch(err=>console.log(err))
   }
   onDetail = (href) => {
     window.open('http://m.mcmssc.com' + href + '.html')
