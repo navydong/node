@@ -1,11 +1,12 @@
 const express = require("express")
 const path = require('path')
 const sqlService = require('./store')
-const sotryRouter = require('./route')
+const task = require('./task')
+const { storyRouter } = require('./route')
 
 const app = express()
 app.use(express.static('public'));
-app.use(express.static('pages'));
+app.use(express.static(path.join(__dirname, 'pages', 'dist')));
 //设置允许跨域访问该服务.
 app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -17,29 +18,30 @@ app.all('*', function (req, res, next) {
 });
 
 
-app.get('/', function(req, res){
+app.get('/', function (req, res) {
+  // task.mi()
   res.send('Hello Donghaijun')
 })
-app.use('/story', sotryRouter)
-app.get('/api/xiaomi/query', function(req, res){
+app.use('/story', storyRouter)
+app.get('/api/xiaomi/query', function (req, res) {
   const sql = 'SELECT * FROM xiaomi WHERE del = 0'
-  sqlService.query(sql).then(row=>{
+  sqlService.query(sql).then(row => {
     res.send({
       code: 200,
       message: 'success',
       data: row
     })
-  }).catch(err=>{
+  }).catch(err => {
     res.send({
       code: 500,
       message: err
     })
   })
 })
-app.get('/api/xiaomi/query/:id', function(req, res){
+app.get('/api/xiaomi/query/:id', function (req, res) {
   const id = req.params.id
   const sql = `SELECT * FROM xiaomi WHERE id = ${id}`
-  sqlService.query(sql).then(row=>{
+  sqlService.query(sql).then(row => {
     res.send({
       code: 200,
       message: 'success',
@@ -47,9 +49,9 @@ app.get('/api/xiaomi/query/:id', function(req, res){
     })
   })
 })
-app.get('/api/xiaomi/delete/:id?', function(req, res){
+app.get('/api/xiaomi/delete/:id?', function (req, res) {
   const id = req.params.id
-  if( id === undefined ){
+  if (id === undefined) {
     res.send({
       code: 500,
       message: 'id不能为空'
@@ -57,7 +59,7 @@ app.get('/api/xiaomi/delete/:id?', function(req, res){
     return
   }
   const sql = `UPDATE xiaomi SET del = 1 WHERE id = ${id}`
-  sqlService.query(sql).then(row=>{
+  sqlService.query(sql).then(row => {
     res.send({
       code: 200,
       message: row.affectedRows === 1 ? 'success' : 'fail'
@@ -68,6 +70,6 @@ app.get('/api/xiaomi/delete/:id?', function(req, res){
 
 
 
-const server = app.listen(3000, function(){
+const server = app.listen(3000, function () {
   console.log('server is running on port %d', 3000)
 })

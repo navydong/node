@@ -48,7 +48,7 @@ export default class App extends React.Component {
     );
     const { dataSource, data } = this.state
     const row = function (rowData, sectionID, rowID, highlightRow) {
-      return <div key={rowID} style={{ padding: '0 15px' }}>
+      return <div key={rowID} style={{ padding: '0 15px' }} onClick={()=> window.open(rowData.link)}>
         <div
           style={{
             lineHeight: '50px',
@@ -77,11 +77,6 @@ export default class App extends React.Component {
           overflow: 'auto',
         }}
       />
-      {/* {
-        data.map(item => {
-          return <div key={item.id}><span>{item.title}</span><img src={item.image} /></div>
-        })
-      } */}
     </div>
   }
 }
