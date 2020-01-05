@@ -1,5 +1,7 @@
 const storyRouter = require('./story')
+const movieRouter = require('./movie')
 
 module.exports = {
-  storyRouter
+  storyRouter,
+  movieRouter
 }

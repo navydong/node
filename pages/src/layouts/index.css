@@ -2,3 +2,10 @@
 .normal {
   background: #BEF279;
 }
+.menus{
+  
+}
+:global(body) {
+  margin: 0;
+  padding: 0;
+}

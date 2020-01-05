@@ -2,10 +2,12 @@ const express = require("express")
 const path = require('path')
 const sqlService = require('./store')
 const task = require('./task')
-const { storyRouter } = require('./route')
+const route = require('./route')
 
 const app = express()
 app.use(express.static('public'));
+
+
 app.use(express.static(path.join(__dirname, 'pages', 'dist')));
 //设置允许跨域访问该服务.
 app.all('*', function (req, res, next) {
@@ -22,7 +24,8 @@ app.get('/', function (req, res) {
   // task.mi()
   res.send('Hello Donghaijun')
 })
-app.use('/story', storyRouter)
+app.use('/story', route.storyRouter)
+app.use('/movie', route.movieRouter)
 app.get('/api/xiaomi/query', function (req, res) {
   const sql = 'SELECT * FROM xiaomi WHERE del = 0'
   sqlService.query(sql).then(row => {

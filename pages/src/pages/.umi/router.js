@@ -22,6 +22,11 @@ const routes = [
         component: require('../mi.js').default,
       },
       {
+        path: '/movie',
+        exact: true,
+        component: require('../movie.js').default,
+      },
+      {
         path: '/story',
         exact: true,
         component: require('../story.js').default,

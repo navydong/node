@@ -1,0 +1,10 @@
+
+.normal {
+  background: rgba(0, 0, 0, .85);
+  width: 100vw;
+  height: 80vh;
+}
+.video{
+  height: 100%;
+  width: 100%;
+}

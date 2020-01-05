@@ -1,10 +1,9 @@
 
 .normal {
-  background: #F27993;
+  /* background: #F27993; */
 }
-.item{
-  height: 40px;
-  line-height: 40px;
-  border-top: 1px solid #f7f7f7;
-  padding: 0 20px;
+.video{
+  height: 80%;
+  width: 600px;
+  margin: 0 auto;
 }
